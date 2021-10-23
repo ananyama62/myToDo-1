@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { View, StatusBar, FlatList } from "react-native";
 import styled from "styled-components";
 import AddInput from "./components/AddInput";
 import TodoList from "./components/TodoList";
 import Empty from "./components/Empty";
 import Header from "./components/Header";
+import firestore from '@react-native-firebase/firestore';
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -23,9 +24,9 @@ export default function App() {
   };
 
   const deleteItem = (key) => {
-    setData((prevTodo) => {
-      return prevTodo.filter((todo) => todo.key != key);
-    });
+    firestore()
+      .collection('Taskdatatest')
+      .doc(key).delete()
   };
 
   const searchItem = (keyword) => {
